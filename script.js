@@ -1,11 +1,25 @@
 // Sélection des éléments du DOM
-const gameImage = document.getElementById('game-image');
+const gameContainer = document.getElementById('game-container');
 const actionButton = document.getElementById('action-button');
+const gameImage = document.getElementById('game-image');
 
-// Fonction pour changer l'image au clic sur le bouton
+// Fonction pour activer le mode plein écran
+function activateFullscreen() {
+    if (gameContainer.requestFullscreen) {
+        gameContainer.requestFullscreen(); // Standard
+    } else if (gameContainer.mozRequestFullScreen) { // Firefox
+        gameContainer.mozRequestFullScreen();
+    } else if (gameContainer.webkitRequestFullscreen) { // Chrome, Safari, Opera
+        gameContainer.webkitRequestFullscreen();
+    } else if (gameContainer.msRequestFullscreen) { // IE/Edge
+        gameContainer.msRequestFullscreen();
+    }
+}
+
+// Activer le mode plein écran au clic sur le bouton
 actionButton.addEventListener('click', () => {
-    gameImage.src = "https://via.placeholder.com/400/ff0000"; // Changer l'image
-    alert("Vous avez cliqué sur le bouton!");
+    activateFullscreen();
+    alert("Le jeu commence en plein écran !");
 });
 
 // Fonction pour ajuster la taille de l'image en fonction de la largeur de l'écran
@@ -17,6 +31,13 @@ function adjustImageSize() {
         gameImage.style.width = '50%';
     }
 }
+
+// Masquer la barre d'adresse sur mobile
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        window.scrollTo(0, 1);
+    }, 0);
+});
 
 // Appel de la fonction au chargement de la page et lors du redimensionnement de la fenêtre
 window.onload = adjustImageSize;
